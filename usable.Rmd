@@ -8,6 +8,23 @@ editor_options:
 library(ggplot2)
 library(fivethirtyeight)
 library(tidyverse)
-```
-ggplot(trump_approval_ratings, aes(x=modeldate)) + geom_point(aes(y=dem),color="blue",alpha=0.9)+geom_smooth(method = "loess",aes(x = modeldate, y = dem)) + geom_point(aes(y=rep),color="red",alpha=0.5)+geom_smooth(method = "loess", aes(x = modeldate, y = rep))
-```
+library(dplyr)
+``
+#set the data to be used
+data = congress_age
+
+#Make subsets of the data by party
+republicans <- subset(data, party == "R")
+democrats <- subset(congress_age, party == "D")
+
+#Wrangle the data so y can be the mean for each year
+mutate(republicans, rep_age = mean(republicans$age))
+names(rep_age)
+
+#Make the ggplot, separate line for each party
+congress_plot = ggplot() + 
+  geom_line(data = rep_age, aes(x = termstart, y = mean), color = "red") +
+  geom_line(data = democrats, aes(x = termstart, y = age), color = "blue") +
+  xlab('') +
+  ylab('') + ggtitle("Average Age of New Members of Congress") + geom_text(aes(x = as.Date("1970-06-07"), y = 52.8), label = "Republicans", color = "red")
+print(congress_plot)
