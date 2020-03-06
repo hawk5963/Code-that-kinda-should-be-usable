@@ -1,0 +1,13 @@
+---
+title: "Visualization"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+
+```{r setup}
+library(ggplot2)
+library(fivethirtyeight)
+library(tidyverse)
+```
+ggplot(trump_approval_ratings, aes(x=modeldate)) + geom_point(aes(y=dem),color="blue",alpha=0.9)+geom_smooth(method = "loess",aes(x = modeldate, y = dem)) + geom_point(aes(y=rep),color="red",alpha=0.5)+geom_smooth(method = "loess", aes(x = modeldate, y = rep))
+```
